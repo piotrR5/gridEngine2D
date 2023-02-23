@@ -1,6 +1,6 @@
 .directory
 .vscode
 
-.out
+*.out
 
 TODO.txt
