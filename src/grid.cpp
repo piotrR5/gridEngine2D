@@ -23,7 +23,11 @@ Cell cellAvg(std::vector<Cell>cells){
 }
 
 void Grid::setRes(uint16_t s){
+    if(s==res)return;
+
     bool shrink(s<res);
+
+    
 
     
 
@@ -36,6 +40,8 @@ void Grid::setRes(uint16_t s){
         uint16_t ratio=res/s;
         for(size_t i=0;i<grid.size();i+=ratio){
             for(size_t j=0;j<grid[0].size();j+=ratio){
+                std::cout<<"["<<i<<" "<<j<<"\n";
+                std::cout<<"["<<grid.size()<<" "<<grid[0].size()<<"\n";
                 std::vector<Cell>cellVector;
                 for(size_t p=0;p<ratio;p++){
                     for(size_t q=0;q<ratio;q++){
@@ -56,7 +62,7 @@ void Grid::setRes(uint16_t s){
             for(size_t j=0;j<grid[0].size();j++){
                 for(size_t p=0;p<ratio;p++){
                     for(size_t q=0;q<ratio;q++){
-                        newGrid[i+p][j+q]=grid[i][j];
+                        newGrid[ratio*i+p][ratio*j+q]=grid[i][j];
                     }
                 }
             }
@@ -64,6 +70,8 @@ void Grid::setRes(uint16_t s){
 
         grid=newGrid;
     }
+
+    res=s;
 }
 
 void Grid::__debug__setRandomColor(uint64_t seed){

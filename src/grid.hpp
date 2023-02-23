@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "cell.hpp"
 #include <cmath>
+#include <iostream>
 
 #ifndef __GRID
 

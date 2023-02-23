@@ -77,6 +77,10 @@ void Engine::eventHandler(bool& run){
 bool Engine::mainLoop(){
     bool run=true;
 
+
+    g.setRes(64);
+    
+
     while(run){
         int startLoop=SDL_GetTicks();
         SDL_RenderClear(renderer);
@@ -99,6 +103,7 @@ bool Engine::mainLoop(){
 
         drawGrid();
         g.__debug__setRandomColor(SDL_GetTicks64());
+        
 
 
 
