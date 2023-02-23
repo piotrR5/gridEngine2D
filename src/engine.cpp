@@ -1,10 +1,12 @@
 #include "engine.hpp"
 
 #ifdef __linux__ 
+
     //linux code goes here
     void clearConsole(){
         system("clear");
     }
+
 #elif _WIN32
     // windows code goes here
     void clearConsole(){
@@ -14,10 +16,15 @@
 
 #endif
 
+
 Engine::Engine(){
     SDL_Init(SDL_INIT_EVERYTHING);
     window=SDL_CreateWindow("Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN); 
     renderer=SDL_CreateRenderer(window, -1, 0);
+
+    SDL_Surface* icon = IMG_Load("assets/icons/icon.png");
+    SDL_SetWindowIcon(window, icon);
+    delete icon;
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);

@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 #include <cstdlib>
 #include <ctime>
+#include <SDL2/SDL_image.h>
 
 #ifndef __ENGINE
 
