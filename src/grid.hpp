@@ -4,6 +4,8 @@
 #include "cell.hpp"
 #include <cmath>
 #include <iostream>
+#include "constants.h"
+
 
 #ifndef __GRID
 
@@ -16,15 +18,27 @@ class Grid{
 
 public:
     /// @brief build an empty Grid object 
-    Grid() : grid(std::vector<std::vector<Cell>>(0,std::vector<Cell>(0))), res(0) {}
+    Grid() : 
+        grid(std::vector<std::vector<Cell>>(0,std::vector<Cell>(0))), 
+        res(0) {}
 
     /// @brief build grid object using a 2D vector of Cells
     /// @param g
-    Grid(std::vector<std::vector<Cell>>g) : grid(g), res(g.size()/2) {} 
+    Grid(std::vector<std::vector<Cell>>g) : 
+        grid(g), 
+        res(0) 
+        {
+            setRes(g.size()/2);
+        } 
 
     /// @brief build grid object of res _res and default 2D vector of cells
     /// @param _res
-    Grid(uint16_t _res) : grid(std::vector<std::vector<Cell>>(_res*2,std::vector<Cell>(_res*3))), res(_res) {} 
+    Grid(uint16_t _res) : 
+        grid(std::vector<std::vector<Cell>>(_res*2,std::vector<Cell>(_res*3, Cell(RGBA({0,0,0,255}))))), 
+        res(0)
+        {
+            setRes(_res);
+        } 
 
     /// @brief returns reference to Grid object
     /// @return 

@@ -30,7 +30,7 @@ Engine::Engine(){
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);    
 
-    g=Grid(32);
+    g=Grid(1);
 
     srand(time(NULL));
 
@@ -41,7 +41,6 @@ Engine::Engine(){
             j.getColor()=RGBA{r, g, b, 255};
         }
     }
-    
 
     mainLoop();
 }
@@ -84,8 +83,11 @@ void Engine::eventHandler(bool& run){
 bool Engine::mainLoop(){
     bool run=true;
 
+    
 
-    g.setRes(64);
+    g.setRes(1024);
+
+    
     
 
     while(run){
@@ -101,7 +103,7 @@ bool Engine::mainLoop(){
          * draw here
         */
         SDL_SetRenderDrawColor(renderer, 255,255,255,255);
-        SDL_RenderDrawLine(renderer, SCREEN_WIDTH-MENU_WIDTH-1, 0, SCREEN_WIDTH-MENU_WIDTH, SCREEN_HEIGHT);
+        SDL_RenderDrawLine(renderer, SCREEN_WIDTH-MENU_WIDTH, 0, SCREEN_WIDTH-MENU_WIDTH, SCREEN_HEIGHT);
         SDL_RenderDrawLine(renderer, SCREEN_WIDTH-MENU_WIDTH+1, 0, SCREEN_WIDTH-MENU_WIDTH+1, SCREEN_HEIGHT);
         SDL_SetRenderDrawColor(renderer, 0,0,0,255);
 
@@ -109,6 +111,7 @@ bool Engine::mainLoop(){
         
 
         drawGrid();
+
         g.__debug__setRandomColor(SDL_GetTicks64());
         
 
@@ -116,12 +119,11 @@ bool Engine::mainLoop(){
 
         SDL_RenderPresent(renderer);
         int dT = SDL_GetTicks64() - startLoop;
-        if(desiredDT-dT)std::cout<<"[fps: "<<1000/abs(desiredDT+dT)<<"]\n";
+        if(desiredDT-dT)std::cout<<"[fps: "<<1000/abs(dT)<<"]\n";
         else std::cout<<"[fps: "<<fps<<"]\n";
         if(dT<desiredDT){
-            SDL_Delay(desiredDT-dT);
+            //SDL_Delay(desiredDT-dT);
         }
-        //clearConsole();
     }
 
     return 0;
@@ -129,20 +131,11 @@ bool Engine::mainLoop(){
 
 
 void Engine::drawGrid(){
-    int16_t res=g.getRes();
-    
-    double cellSize=(double)SCREEN_HEIGHT/(2*res);
-
     for(size_t y=0;y<g.getGrid().size();y++){
         for(size_t x=0; x<g.getGrid()[0].size(); x++){
-            SDL_FRect cell;
-            cell.h=cellSize;
-            cell.w=cellSize;
-            cell.x=x*cellSize;
-            cell.y=y*cellSize;
             RGBA c=g.getGrid()[y][x].getColor();
             SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
-            SDL_RenderFillRectF(renderer, &cell);
+            SDL_RenderFillRectF(renderer, &(g.getGrid()[y][x].getRect()));
             SDL_SetRenderDrawColor(renderer, 0,0,0,255);
         }
     }

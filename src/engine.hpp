@@ -6,15 +6,13 @@
 #include <cstdlib>
 #include <ctime>
 #include <SDL2/SDL_image.h>
+#include "constants.h"
 
 #ifndef __ENGINE
 
 #define __ENGINE
 
-#define MENU_WIDTH 300
-#define MENU_HEIGHT SCREEN_HEIGHT
-#define SCREEN_WIDTH 1152 + MENU_WIDTH // 300 is the place for the menu
-#define SCREEN_HEIGHT 786
+
 
 class Engine{
     uint8_t fps=60;

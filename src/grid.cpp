@@ -23,19 +23,16 @@ Cell cellAvg(std::vector<Cell>cells){
 }
 
 void Grid::setRes(uint16_t s){
+
+    
+
     if(s==res)return;
 
     bool shrink(s<res);
 
-    
-
-    
-
     if(res==0){
-        grid=std::vector<std::vector<Cell>>(s*2, std::vector<Cell>(s*3, Cell()));
-    }
-
-    if(shrink){
+        grid=std::vector<std::vector<Cell>>(s*2, std::vector<Cell>(s*3, Cell(RGBA(), SDL_FRect())));
+    }else if(shrink){
         std::vector<std::vector<Cell>>newGrid(std::vector<std::vector<Cell>>(s*2, std::vector<Cell>(s*3, Cell())));
         uint16_t ratio=res/s;
         for(size_t i=0;i<grid.size();i+=ratio){
@@ -72,6 +69,17 @@ void Grid::setRes(uint16_t s){
     }
 
     res=s;
+
+    double cellSize=(double)SCREEN_HEIGHT/(2*res);
+
+    for(size_t y=0;y<grid.size();y++){
+        for(size_t x=0; x<grid[0].size(); x++){
+            grid[y][x].getRect().h=cellSize;
+            grid[y][x].getRect().w=cellSize;
+            grid[y][x].getRect().x=x*cellSize;
+            grid[y][x].getRect().y=y*cellSize;
+        }
+    }
 }
 
 void Grid::__debug__setRandomColor(uint64_t seed){
@@ -86,8 +94,6 @@ void Grid::__debug__setRandomColor(uint64_t seed){
             tempC.r+=(int8_t)(rand()%2*x*2);
             tempC.g+=(int8_t)(rand()%2*x*2);
             tempC.b+=(int8_t)(rand()%2*x*2);
-            
-
 
             j.getColor()=tempC;
         }
