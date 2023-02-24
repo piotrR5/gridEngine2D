@@ -85,9 +85,10 @@ bool Engine::mainLoop(){
 
     
 
-    g.setRes(1024);
+    g.setRes(128);
 
     
+    g.__debug__setRandomColor(SDL_GetTicks64());
     
 
     while(run){

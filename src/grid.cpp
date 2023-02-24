@@ -23,9 +23,6 @@ Cell cellAvg(std::vector<Cell>cells){
 }
 
 void Grid::setRes(uint16_t s){
-
-    
-
     if(s==res)return;
 
     bool shrink(s<res);
