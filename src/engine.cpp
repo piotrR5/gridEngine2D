@@ -83,13 +83,7 @@ void Engine::eventHandler(bool& run){
 bool Engine::mainLoop(){
     bool run=true;
 
-    
-
-    g.setRes(128);
-
-    
-    g.__debug__setRandomColor(SDL_GetTicks64());
-    
+    g.setRes(256);
 
     while(run){
         int startLoop=SDL_GetTicks();
@@ -110,20 +104,22 @@ bool Engine::mainLoop(){
 
         
         
-
         drawGrid();
-
         g.__debug__setRandomColor(SDL_GetTicks64());
-        
-
-
-
         SDL_RenderPresent(renderer);
+
+
+        /**
+         * 
+        */
+
+
+
+
         int dT = SDL_GetTicks64() - startLoop;
-        if(desiredDT-dT)std::cout<<"[fps: "<<1000/abs(dT)<<"]\n";
-        else std::cout<<"[fps: "<<fps<<"]\n";
+        std::cout<<"[fps: "<<1000/dT<<"]\n";
         if(dT<desiredDT){
-            //SDL_Delay(desiredDT-dT);
+            SDL_Delay(desiredDT-dT);
         }
     }
 
@@ -137,8 +133,8 @@ void Engine::drawGrid(){
             RGBA c=g.getGrid()[y][x].getColor();
             SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
             SDL_RenderFillRectF(renderer, &(g.getGrid()[y][x].getRect()));
-            SDL_SetRenderDrawColor(renderer, 0,0,0,255);
         }
     }
+    SDL_SetRenderDrawColor(renderer, 0,0,0,255);
 }
 

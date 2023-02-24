@@ -7,3 +7,5 @@ prof: clean
 	less profOut.txt
 clean:
 	rm -f profOut.txt engine.out gmon.out
+run: all
+	./engine.out

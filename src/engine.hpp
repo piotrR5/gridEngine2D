@@ -15,8 +15,8 @@
 
 
 class Engine{
-    uint8_t fps=60;
-    uint8_t desiredDT=1000/fps;
+    uint16_t fps=60;
+    uint16_t desiredDT=1000/fps;
     Grid g;
 public:
     SDL_Window* window;
