@@ -8,6 +8,7 @@
 #include <complex>
 #include <functional>
 #include <unordered_map>
+#include "cell.hpp"
 
 #ifndef __PARSER
 

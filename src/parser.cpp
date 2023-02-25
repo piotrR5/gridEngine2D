@@ -27,13 +27,54 @@ void Config::parseConfig(string filename){
         }else if(val=="true" || val=="false"){
             any foo=make_any<bool>((val=="true" ? 1 : 0));
             config.emplace(key, foo);
+        }else if(val[0]=='{'){
+            while(val.find('{')!=string::npos){
+                val.erase(val.begin()+val.find('{'));
+            }
+            while(val.find('}')!=string::npos){
+                val.erase(val.begin()+val.find('}'));
+            }
+            while(val.find(',')!=string::npos){
+                val[val.find(',')]=' ';
+            }
+            uint8_t r,g,b,a;
+            string sr="",sg="",sb="",sa="";
+            size_t i;
+
+            for(i=0;i<val.size();i++){
+                if(val[i]==' ')break;
+                sr+=val[i];
+            }
+            i++;
+            for(;i<val.size();i++){
+                if(val[i]==' ')break;
+                sg+=val[i];
+            }
+            i++;
+            for(;i<val.size();i++){
+                if(val[i]==' ')break;
+                sb+=val[i];
+            }
+            i++;
+            for(;i<val.size();i++){
+                if(val[i]==' ')break;
+                sa+=val[i];
+            }
+
+            r=stoi(sr);
+            g=stoi(sg);
+            b=stoi(sb);
+            a=stoi(sa);
+            
+            RGBA temp={r,g,b,a};
+            any foo=make_any<RGBA>(temp);
+            config.emplace(key, foo);
         }else{
             val.erase(0,1);
             val.erase(val.size()-1, val.size());
             any foo=make_any<string>(val);
             config.emplace(key, foo);
         }
-
 
         cout<<"[ config: ] "<<key<<" = "<<val<<" <- "<<config[key].type().name()<<"\n";
     }
@@ -59,6 +100,9 @@ void Config::saveConfig(string filename){
             file<<foo;
         }else if(b.type()==typeid(bool)){
             file<<any_cast<bool>(b);
+        }else if(b.type()==typeid(RGBA)){
+            RGBA foo=any_cast<RGBA>(b);
+            file<<"{"<<(int)foo.r<<","<<(int)foo.g<<","<<(int)foo.b<<","<<(int)foo.a<<"}";
         }
         file<<"\n";
     }

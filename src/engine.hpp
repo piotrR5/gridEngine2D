@@ -8,6 +8,7 @@
 #include <SDL2/SDL_image.h>
 #include "constants.h"
 #include "parser.hpp"
+#include "gui.hpp"
 
 #ifndef __ENGINE
 
@@ -20,6 +21,8 @@ class Engine{
     uint16_t fps=60;
     uint16_t desiredDT=1000/fps;
     Grid g;
+    Gui_Container gui;
+
 public:
     SDL_Window* window;
     SDL_Renderer* renderer;
@@ -55,6 +58,8 @@ public:
      * @brief function draws the grid on a designated place
     */
     void drawGrid();
+
+    void guiSetup();
 
     Engine();
 

@@ -1,7 +1,7 @@
 all: clean
-	g++ main.cpp src/cell.hpp src/grid.cpp src/grid.hpp src/engine.cpp src/engine.hpp src/parser.cpp src/parser.hpp -lSDL2 -lSDL2_image -o engine.out -Wall -Werror -Wno-error=maybe-uninitialized -Wno-error=unused-result -O3
+	g++ main.cpp src/cell.hpp src/grid.cpp src/grid.hpp src/engine.cpp src/engine.hpp src/parser.cpp src/parser.hpp src/gui.cpp src/gui.hpp -lSDL2 -lSDL2_image -o engine.out -Wall -Werror -Wno-error=maybe-uninitialized -Wno-error=unused-result -O3
 prof: clean
-	g++ main.cpp src/cell.hpp src/grid.cpp src/grid.hpp src/engine.cpp src/engine.hpp src/parser.cpp src/parser.hpp -lSDL2 -lSDL2_image -o engine.out -Wall -Werror -pg -Wno-error=maybe-uninitialized -Wno-error=unused-result
+	g++ main.cpp src/cell.hpp src/grid.cpp src/grid.hpp src/engine.cpp src/engine.hpp src/parser.cpp src/parser.hpp src/gui.cpp src/gui.hpp -lSDL2 -lSDL2_image -o engine.out -Wall -Werror -pg -Wno-error=maybe-uninitialized -Wno-error=unused-result
 	./engine.out
 	gprof ./engine.out gmon.out > profOut.txt
 	less profOut.txt

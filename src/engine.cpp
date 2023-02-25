@@ -52,12 +52,23 @@ Engine::Engine(){
         }
     }
 
+    guiSetup();
+
     mainLoop();
 }
 
 Engine::~Engine(){
     SDL_DestroyWindow(window);
     SDL_Quit();
+}
+
+
+void Engine::guiSetup(){
+    gui=Gui_Container(config);
+    Button test(100,50, 100,50);
+    Button test2(100,50, 100,500);
+    gui.add(test);
+    gui.add(test2);
 }
 
 
@@ -95,7 +106,7 @@ void Engine::eventHandler(bool& run){
 bool Engine::mainLoop(){
     bool run=true;
 
-    g.setRes(any_cast<int>(config["RESOLUTION"]));
+    g.setRes(config.at<int>("RESOLUTION"));
 
     while(run){
         int startLoop=SDL_GetTicks();
@@ -119,6 +130,10 @@ bool Engine::mainLoop(){
         
         drawGrid();
         g.__debug__setRandomColor(SDL_GetTicks64());
+
+
+        gui.draw(renderer);
+
         SDL_RenderPresent(renderer);
 
 
