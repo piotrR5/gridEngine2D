@@ -7,6 +7,7 @@
 #include <ctime>
 #include <SDL2/SDL_image.h>
 #include "constants.h"
+#include "parser.hpp"
 
 #ifndef __ENGINE
 
@@ -15,6 +16,7 @@
 
 
 class Engine{
+    Config config;
     uint16_t fps=60;
     uint16_t desiredDT=1000/fps;
     Grid g;

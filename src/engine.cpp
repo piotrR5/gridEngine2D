@@ -19,7 +19,17 @@
 
 Engine::Engine(){
     SDL_Init(SDL_INIT_EVERYTHING);
-    window=SDL_CreateWindow("Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN); 
+    config.parseConfig("config.cfg");
+
+    //window=SDL_CreateWindow("Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN); 
+    window=SDL_CreateWindow(
+        any_cast<string>(config["ENGINE_NAME"]).c_str(), 
+        SDL_WINDOWPOS_CENTERED, 
+        SDL_WINDOWPOS_CENTERED, 
+        any_cast<int>(config["SCREEN_WIDTH"]), 
+        any_cast<int>(config["SCREEN_HEIGHT"]), 
+        SDL_WINDOW_SHOWN); 
+
     renderer=SDL_CreateRenderer(window, -1, 0);
 
     SDL_Surface* icon = IMG_Load("assets/icons/icon.png");
@@ -58,6 +68,7 @@ void Engine::eventHandler(bool& run){
         case SDL_QUIT:
             run = false;
             std::cout << "Quitting!\n";
+            config.saveConfig("config.cfg");
             break;
         
         break;
@@ -66,6 +77,7 @@ void Engine::eventHandler(bool& run){
                 case SDLK_q:{
                     run = false;
                     std::cout << "Quitting!\n";
+                    config.saveConfig("config.cfg");
                     break;
                 }
                 break;
@@ -83,7 +95,7 @@ void Engine::eventHandler(bool& run){
 bool Engine::mainLoop(){
     bool run=true;
 
-    g.setRes(256);
+    g.setRes(any_cast<int>(config["RESOLUTION"]));
 
     while(run){
         int startLoop=SDL_GetTicks();
@@ -115,9 +127,9 @@ bool Engine::mainLoop(){
 
 
 
-
+        //clearConsole();
         int dT = SDL_GetTicks64() - startLoop;
-        std::cout<<"[fps: "<<1000/dT<<"]\n";
+        std::cout<<"[fps: "<<1000/(double)(dT+0.001)<<"]\n";
         if(dT<desiredDT){
             SDL_Delay(desiredDT-dT);
         }
