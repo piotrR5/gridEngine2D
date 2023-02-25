@@ -28,14 +28,23 @@ struct Config{
 
     any& operator[](string key);
 
+    
+
     unordered_map<string,any>config;
 
     void parseConfig(string filename);
 
     void saveConfig(string filename);
 
-};
+    template<typename T>
+    T at(string key){
+        if(config.find(key)==config.end()){
+            return T();
+        }
+        return any_cast<T>(config[key]);
+    }
 
+};
 
 
 

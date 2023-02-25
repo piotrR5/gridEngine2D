@@ -23,11 +23,11 @@ Engine::Engine(){
 
     //window=SDL_CreateWindow("Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN); 
     window=SDL_CreateWindow(
-        any_cast<string>(config["ENGINE_NAME"]).c_str(), 
+        config.at<string>("ENGINE_NAME").c_str(), 
         SDL_WINDOWPOS_CENTERED, 
         SDL_WINDOWPOS_CENTERED, 
-        any_cast<int>(config["SCREEN_WIDTH"]), 
-        any_cast<int>(config["SCREEN_HEIGHT"]), 
+        config.at<int>("SCREEN_WIDTH"), 
+        config.at<int>("SCREEN_HEIGHT"), 
         SDL_WINDOW_SHOWN); 
 
     renderer=SDL_CreateRenderer(window, -1, 0);
@@ -109,9 +109,10 @@ bool Engine::mainLoop(){
         /**
          * draw here
         */
+
         SDL_SetRenderDrawColor(renderer, 255,255,255,255);
-        SDL_RenderDrawLine(renderer, SCREEN_WIDTH-MENU_WIDTH, 0, SCREEN_WIDTH-MENU_WIDTH, SCREEN_HEIGHT);
-        SDL_RenderDrawLine(renderer, SCREEN_WIDTH-MENU_WIDTH+1, 0, SCREEN_WIDTH-MENU_WIDTH+1, SCREEN_HEIGHT);
+        SDL_RenderDrawLine(renderer, config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH"), 0, config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH"), config.at<int>("SCREEN_HEIGHT"));
+        SDL_RenderDrawLine(renderer, config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH")+1, 0, config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH")+1, config.at<int>("SCREEN_HEIGHT"));
         SDL_SetRenderDrawColor(renderer, 0,0,0,255);
 
         

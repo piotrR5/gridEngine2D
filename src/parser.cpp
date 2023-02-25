@@ -16,9 +16,8 @@ void Config::parseConfig(string filename){
         stringstream ss;
         ss<<line;
         ss>>key>>foo>>val;
-        
 
-        //type finding
+
         if(val.find(".")!=string::npos){
             any foo=make_any<double>(stod(val));
             config.emplace(key, foo);
@@ -49,9 +48,6 @@ void Config::saveConfig(string filename){
 
         file<<a<<" = ";
 
-
-        //NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE <- string.type().name()
-
         if(b.type()==typeid(int)){
             file<<any_cast<int>(b);
         }else if(b.type()==typeid(double)){
@@ -77,3 +73,5 @@ any& Config::operator[](string key){
     }
     return config[key];
 }
+
+
