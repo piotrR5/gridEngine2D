@@ -5,6 +5,7 @@
 #include <cmath>
 #include <iostream>
 #include "constants.h"
+#include "parser.hpp"
 
 
 #ifndef __GRID
@@ -14,13 +15,18 @@
 class Grid{
     std::vector<std::vector<Cell>>grid;
     uint16_t res;
+    Config config;
+    int GRID_HEIGHT, GRID_WIDTH;
 
-
+    void setUpGrid();
 public:
     /// @brief build an empty Grid object 
     Grid() : 
         grid(std::vector<std::vector<Cell>>(0,std::vector<Cell>(0))), 
-        res(0) {}
+        res(0) 
+        {
+            setUpGrid();
+        }
 
     /// @brief build grid object using a 2D vector of Cells
     /// @param g
@@ -28,6 +34,7 @@ public:
         grid(g), 
         res(0) 
         {
+            setUpGrid();
             setRes(g.size()/2);
         } 
 
@@ -38,6 +45,7 @@ public:
         res(0)
         {
             setRes(_res);
+            setUpGrid();
         } 
 
     /// @brief returns reference to Grid object

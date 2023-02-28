@@ -79,6 +79,8 @@ void Config::parseConfig(string filename){
         cout<<"[ config: ] "<<key<<" = "<<val<<" <- "<<config[key].type().name()<<"\n";
     }
     this->config=config;
+
+    file.close();
 }
 
 void Config::saveConfig(string filename){

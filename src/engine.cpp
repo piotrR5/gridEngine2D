@@ -19,6 +19,7 @@
 
 Engine::Engine(){
     SDL_Init(SDL_INIT_EVERYTHING);
+    TTF_Init();
     config.parseConfig("config.cfg");
 
     //window=SDL_CreateWindow("Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN); 
@@ -59,16 +60,19 @@ Engine::Engine(){
 
 Engine::~Engine(){
     SDL_DestroyWindow(window);
+    TTF_Quit();
     SDL_Quit();
 }
 
 
 void Engine::guiSetup(){
     gui=Gui_Container(config);
-    Button test(100,50, 100,50);
-    Button test2(100,50, 100,500);
+    Button test;
+    test.text="chuj";
+    test.setButton(100,50,100,50, renderer);
+
+
     gui.add(test);
-    gui.add(test2);
 }
 
 
@@ -121,15 +125,17 @@ bool Engine::mainLoop(){
          * draw here
         */
 
-        SDL_SetRenderDrawColor(renderer, 255,255,255,255);
-        SDL_RenderDrawLine(renderer, config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH"), 0, config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH"), config.at<int>("SCREEN_HEIGHT"));
-        SDL_RenderDrawLine(renderer, config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH")+1, 0, config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH")+1, config.at<int>("SCREEN_HEIGHT"));
-        SDL_SetRenderDrawColor(renderer, 0,0,0,255);
+        
 
         
         
         drawGrid();
         g.__debug__setRandomColor(SDL_GetTicks64());
+
+        SDL_SetRenderDrawColor(renderer, 255,0,0,255);
+        SDL_RenderDrawLine(renderer, config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH"), 0, config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH"), config.at<int>("SCREEN_HEIGHT"));
+        SDL_RenderDrawLine(renderer, config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH")+1, 0, config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH")+1, config.at<int>("SCREEN_HEIGHT"));
+        SDL_SetRenderDrawColor(renderer, 0,0,0,255);
 
 
         gui.draw(renderer);

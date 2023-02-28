@@ -1,5 +1,12 @@
 #include "grid.hpp"
 
+void Grid::setUpGrid(){
+    config.parseConfig("config.cfg");
+    GRID_HEIGHT=config.at<int>("SCREEN_HEIGHT");
+    GRID_WIDTH=config.at<int>("SCREEN_WIDTH")-config.at<int>("MENU_WIDTH");
+}
+
+
 Cell cellAvg(std::vector<Cell>cells){
     double colorAvg[4];
 
@@ -67,7 +74,7 @@ void Grid::setRes(uint16_t s){
 
     res=s;
 
-    double cellSize=(double)SCREEN_HEIGHT/(2*res);
+    double cellSize=((double)GRID_HEIGHT)/(2*res);
 
     for(size_t y=0;y<grid.size();y++){
         for(size_t x=0; x<grid[0].size(); x++){
