@@ -13,7 +13,7 @@ class Button{
 public:
     float w,h,x,y;
     std::string text;
-    SDL_Rect buttRect;
+    SDL_Rect buttRect, textRect;
     SDL_Color textColor;
     TTF_Font* font;
     SDL_Surface* surface;
@@ -26,16 +26,17 @@ public:
     Button(std::string l) {}
 
     void setButton(float w, float h, float x, float y, SDL_Renderer* renderer);
+    void setText(std::string text, SDL_Renderer* renderer);
 
     ~Button();
 };
 
 class Gui_Container{
     float w,h,x,y;
-    std::vector<Button>children;
+    
     RGBA color, color_hover;
 public:
-
+    std::vector<Button>children;
     Gui_Container();
     Gui_Container( Config config);
     void add(Button o);

@@ -13,7 +13,21 @@ void Button::setButton(float w, float h, float x, float y, SDL_Renderer* rendere
     buttRect.h=h;
     buttRect.x=x+1152;
     buttRect.y=y;
+    textRect.x=x+1152;
+    textRect.y=y;
+    TTF_SizeText(font, text.c_str(), &textRect.w, &textRect.h);
+    buttRect.h=textRect.h;
 
+    surface = TTF_RenderText_Solid(font, text.c_str(), textColor);
+    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_FreeSurface(surface);
+    TTF_Quit();
+}
+
+void Button::setText(std::string text, SDL_Renderer* renderer){
+    TTF_Init();
+    font=TTF_OpenFont("assets/fonts/OpenSans-Light.ttf", 24);
+    TTF_SizeText(font, text.c_str(), &textRect.w, &textRect.h);
     surface = TTF_RenderText_Solid(font, text.c_str(), textColor);
     texture = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_FreeSurface(surface);
@@ -43,9 +57,7 @@ void Gui_Container::add(Button o){
 
 void Gui_Container::draw(SDL_Renderer* ren){
     for(size_t i=0;i<children.size();i++){
-        SDL_Rect butt;
-        butt.w=children[i].w;
-        butt.h=children[i].h;
+        SDL_Rect butt=children[i].buttRect;
         butt.x=children[i].x + x;
         butt.y=children[i].y + y;
 
@@ -61,7 +73,7 @@ void Gui_Container::draw(SDL_Renderer* ren){
         SDL_SetRenderDrawColor(ren, color.r, color.g, color.b, color.a);
         SDL_RenderDrawRect(ren, &butt);   
 
-        SDL_RenderCopy(ren, children[i].texture, NULL, &children[i].buttRect);     
+        SDL_RenderCopy(ren, children[i].texture, NULL, &children[i].textRect);     
     }
     SDL_SetRenderDrawColor(ren, 0,0,0,255);
 }

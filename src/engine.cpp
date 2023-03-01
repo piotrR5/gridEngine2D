@@ -68,10 +68,18 @@ Engine::~Engine(){
 void Engine::guiSetup(){
     gui=Gui_Container(config);
     Button test;
+
+    Button fps_button;
+    fps_button.text="";
+    fps_button.setButton(80,20,220,0, renderer);
+    fps_button.textColor.r=100;
+    fps_button.textColor.g=255;
+    fps_button.textColor.r=100;
+
     test.text="chuj";
     test.setButton(100,50,100,50, renderer);
 
-
+    gui.add(fps_button);
     gui.add(test);
 }
 
@@ -151,7 +159,11 @@ bool Engine::mainLoop(){
 
         //clearConsole();
         int dT = SDL_GetTicks64() - startLoop;
-        std::cout<<"[fps: "<<1000/(double)(dT+0.001)<<"]\n";
+        string fps_text;
+        if(dT)fps_text=" "+std::to_string((int)(1000/(float)(dT)));
+        else fps_text=" 1000";
+        gui.children[0].setText(fps_text, renderer);
+        //std::cout<<"[fps: "<<1000/(double)(dT+0.001)<<"]\n";
         if(dT<desiredDT){
             SDL_Delay(desiredDT-dT);
         }
